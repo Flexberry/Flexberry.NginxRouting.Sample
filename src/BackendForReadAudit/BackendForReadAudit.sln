@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendForReadAudit", "BackendForReadAudit\BackendForReadAudit.csproj", "{7BC22C9F-A409-4027-BCF3-36D919FF3B03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BC22C9F-A409-4027-BCF3-36D919FF3B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BC22C9F-A409-4027-BCF3-36D919FF3B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BC22C9F-A409-4027-BCF3-36D919FF3B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BC22C9F-A409-4027-BCF3-36D919FF3B03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79768714-9F69-41B1-A363-8713C654F05C}
+	EndGlobalSection
+EndGlobal
