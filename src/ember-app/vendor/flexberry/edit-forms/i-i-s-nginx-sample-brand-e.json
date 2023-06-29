@@ -1,0 +1,14 @@
+﻿{
+  "propertyLookup": [],
+  "external": false,
+  "caption": "Brand",
+  "name": "IISNginxSampleBrandE",
+  "className": "BrandE",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "i-i-s-nginx-sample-brand",
+      "modelProjection": "BrandE"
+    }
+  ]
+}
