@@ -1,0 +1,36 @@
+﻿{
+  "applicationCaption": "Apache Nginx Sample",
+  "applicationTitle": "Apache Nginx Sample",
+  "items": [
+    {
+      "link": null,
+      "menuName": "ni-fi-sample",
+      "caption": "NginxSample",
+      "title": "NginxSample",
+      "children": [
+        {
+          "link": "i-i-s-nginx-sample-brand-l",
+          "menuName": null,
+          "caption": "Brand",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "i-i-s-nginx-sample-car-l",
+          "menuName": null,
+          "caption": "Car",
+          "title": "",
+          "children": null
+        },
+        {
+          "link": "i-i-s-nginx-sample-producing-country-l",
+          "menuName": null,
+          "caption": "Producing country",
+          "title": "",
+          "children": null
+        }
+      ]
+    }
+  ],
+  "mobile": true
+}

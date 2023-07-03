@@ -1,0 +1,66 @@
+﻿version: '3'
+
+services:
+  app:
+    image: nginxsample/app
+    ports:
+      - 80:80
+    environment:
+      - UploadUrl=Uploads
+      - BackendRoot=http://localhost
+    networks:
+      - nginxsample
+
+  app-postgre-db:
+    image: nginxsample/postgre-sql
+    volumes:
+      - NginxSamplePostgreDb:/var/lib/pgsql/data/
+    ports:
+      - 5432:5432
+    networks:
+      - nginxsample
+      
+  audit-clickhouse-db:
+    image: nginxsample/audit-clickhouse
+    command: gosu clickhouse:clickhouse sh -c ' while :; do /usr/bin/clickhouse-server --config-file=/etc/clickhouse-server/config.xml; sleep 1; done'
+    volumes:
+      - NginxSampleAuditClickhouseDb:/var/lib/clickhouse
+    ports:
+      - 8123:8123
+      - 9000:9000
+    networks:
+      - nginxsample
+
+  audit-odata-backend:
+    image: nginxsample/auditodatabackend
+    ports:
+      - 6505:6505
+    environment:
+      - DOTNET_ENVIRONMENT=DockerAuditClickhouse
+      - ASPNETCORE_URLS=http://+:6505
+    networks:
+      - nginxsample
+
+  nginx:
+    restart: always
+    image: nginxsample/nginx
+    environment:
+      - NGINX_ENVSUBST_TEMPLATE_DIR=/etc/nginx
+      - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
+      - NGINX_SAMPLE_DOMAIN=servicebus.local
+    depends_on:
+      - app
+      - audit-odata-backend
+    ports:
+    # Раскоментировать (и убрать 80:80 у app), чтобы заработал принудительный редирект http->https
+    # - 80:80
+      - 443:443
+    networks:
+      - nginxsample
+
+volumes:
+  NginxSamplePostgreDb:
+  NginxSampleAuditClickhouseDb:
+
+networks:
+  nginxsample:

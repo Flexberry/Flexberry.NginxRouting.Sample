@@ -1,0 +1,85 @@
+worker_processes auto;
+
+error_log stderr crit;
+
+events {
+  use epoll;
+  multi_accept on;
+}
+
+http {
+  include       mime.types;
+  default_type  application/octet-stream;
+
+  access_log /dev/stdout;
+
+  tcp_nopush on;
+
+  keepalive_timeout 100;
+
+  gzip on;
+  gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript;
+
+  open_file_cache max=200000 inactive=20s;
+  open_file_cache_valid 30s;
+  open_file_cache_min_uses 2;
+  open_file_cache_errors on;
+
+  #https://stackoverflow.com/questions/48964429/net-core-behind-nginx-returns-502-bad-gateway-after-authentication-by-identitys
+  proxy_buffer_size   128k;
+  proxy_buffers   4 256k;
+  proxy_busy_buffers_size   256k;
+  large_client_header_buffers 4 16k;
+
+  server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 301 https://$host$request_uri;
+  }
+
+  server {
+    client_max_body_size  100m;
+    listen                443 ssl;
+    server_name           ${NGINX_SAMPLE_DOMAIN};
+
+    # https://stackoverflow.com/a/54719226
+    resolver              127.0.0.11;
+
+    ssl_certificate       /etc/nginx/certs/${NGINX_SAMPLE_DOMAIN}.crt;
+    ssl_certificate_key   /etc/nginx/certs/${NGINX_SAMPLE_DOMAIN}.key;
+    ssl_session_cache     shared:SSL:10m;
+    ssl_session_timeout   10m;
+    ssl_ciphers  				  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers	on;
+
+    proxy_connect_timeout	600;
+    proxy_send_timeout 		600;
+    proxy_read_timeout 		600;
+    send_timeout 			    600;
+
+    location / {
+      set $upstream       app;
+      proxy_pass          http://$upstream;
+      proxy_http_version 	1.1;
+      proxy_set_header   	Upgrade $http_upgrade;
+      proxy_set_header   	Connection keep-alive;
+      proxy_set_header   	Host $host;
+      proxy_cache_bypass 	$http_upgrade;
+      proxy_set_header   	X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header   	X-Forwarded-Proto $scheme;
+    }
+
+    location /odata/NewPlatformFlexberryAuditBigDataAuditRecords {
+      set $auditstream       audit-odata-backend:6505;
+      proxy_pass          http://$auditstream;
+      proxy_http_version 	1.1;
+      proxy_set_header   	Upgrade $http_upgrade;
+      proxy_set_header   	Connection keep-alive;
+      proxy_set_header   	Host $host;
+      proxy_cache_bypass 	$http_upgrade;
+      proxy_set_header   	X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header   	X-Forwarded-Proto $scheme;
+    }
+  }
+}

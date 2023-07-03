@@ -1,0 +1,14 @@
+﻿{
+  "propertyLookup": [],
+  "external": false,
+  "caption": "Producing country",
+  "name": "IISNginxSampleProducingCountryE",
+  "className": "ProducingCountryE",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "i-i-s-nginx-sample-producing-country",
+      "modelProjection": "ProducingCountryE"
+    }
+  ]
+}

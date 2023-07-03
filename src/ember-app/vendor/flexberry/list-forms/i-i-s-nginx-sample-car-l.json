@@ -1,0 +1,15 @@
+﻿{
+  "newForm": "i-i-s-nginx-sample-car-e",
+  "editForm": "i-i-s-nginx-sample-car-e",
+  "external": false,
+  "caption": "Car",
+  "name": "IISNginxSampleCarL",
+  "className": "CarL",
+  "attrs": [],
+  "projections": [
+    {
+      "modelName": "i-i-s-nginx-sample-car",
+      "modelProjection": "CarL"
+    }
+  ]
+}
